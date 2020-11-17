@@ -2,6 +2,8 @@ import React, {  useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles';
+import { useDispatch } from 'react-redux';
+import { createPost } from '../../actions/posts';
 
 const Form = () => {
     const [postData, setPostData] = useState({
@@ -12,15 +14,19 @@ const Form = () => {
         selectedFile: ''
     });
     const classes = useStyles();
-    const handleSubmit = () => {
+    const dispatch = useDispatch();
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        dispatch(createPost(postData));
     }
     const clear = () => {
 
     }
     return (
         <Paper className={classes.paper}>
-            <form autocomplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={ handleSubmit}>
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={ handleSubmit}>
                 <Typography variant="h6">Creating a Memory</Typography>
                 <TextField
                     name="creator"
